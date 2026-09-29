@@ -7,6 +7,7 @@
     <title>Tesla — Model Y</title>
     <link rel="icon" href="assets/tesla-logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -26,13 +27,26 @@
         </ul>
 
         <div class="nav-actions">
-          <a class="button button-primary button-small" href="#discover">Test Drive</a>
+          <button
+            type="button"
+            class="button button-primary button-small"
+            data-cal-link="munkhzul-batbaatar-fz2k49/tesla-model-3"
+            data-cal-namespace="tesla-model-3"
+            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+          >Test Drive</button>
         </div>
 
         <details class="mobile-menu">
           <summary aria-label="Open navigation menu">Menu</summary>
           <ul>
-            <li><a href="#discover">Test Drive</a></li>
+            <li>
+              <button
+                type="button"
+                data-cal-link="munkhzul-batbaatar-fz2k49/tesla-model-3"
+                data-cal-namespace="tesla-model-3"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+              >Test Drive</button>
+            </li>
             <li><a href="#vehicles">Vehicles</a></li>
             <li><a href="#energy">Energy</a></li>
             <li><a href="#charging">Charging</a></li>
@@ -54,9 +68,15 @@
             <p>1.49% APR Available</p>
           </div>
           <div class="button-row">
-            <a class="button button-primary" href="#inventory-title">Order Now</a>
+            <button
+              class="button button-primary"
+              id="order-now-button"
+              type="button"
+              aria-describedby="checkout-status"
+            >Order Now</button>
             <a class="button button-light" href="#vehicles">Learn More</a>
           </div>
+          <p class="checkout-status" id="checkout-status" role="status" aria-live="polite" hidden></p>
         </div>
 
         <nav class="hero-tabs" aria-label="Featured vehicle models">
@@ -341,5 +361,54 @@
         </div>
       </div>
     </footer>
+
+    <!-- Cal.com element-click embed -->
+    <script>
+      (function (C, A, L) {
+        const queue = function (api, args) {
+          api.q.push(args);
+        };
+        const document = C.document;
+
+        C.Cal = C.Cal || function () {
+          const cal = C.Cal;
+          const args = arguments;
+
+          if (!cal.loaded) {
+            cal.ns = {};
+            cal.q = cal.q || [];
+            document.head.appendChild(document.createElement("script")).src = A;
+            cal.loaded = true;
+          }
+
+          if (args[0] === L) {
+            const api = function () {
+              queue(api, arguments);
+            };
+            const namespace = args[1];
+            api.q = api.q || [];
+
+            if (typeof namespace === "string") {
+              cal.ns[namespace] = cal.ns[namespace] || api;
+              queue(cal.ns[namespace], args);
+              queue(cal, ["initNamespace", namespace]);
+            } else {
+              queue(cal, args);
+            }
+            return;
+          }
+
+          queue(cal, args);
+        };
+      })(window, "https://app.cal.com/embed/embed.js", "init");
+
+      Cal("init", "tesla-model-3", { origin: "https://app.cal.com" });
+      Cal.config = Cal.config || {};
+      Cal.config.forwardQueryParams = true;
+      Cal.ns["tesla-model-3"]("ui", {
+        hideEventTypeDetails: false,
+        layout: "month_view"
+      });
+    </script>
   </body>
 </html>

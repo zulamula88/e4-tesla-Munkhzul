@@ -232,13 +232,22 @@ summary {
   box-shadow: 0 16px 36px rgba(3, 4, 12, 0.12);
 }
 
-.mobile-menu li a {
+.mobile-menu li a,
+.mobile-menu li button {
   display: block;
+  width: 100%;
   padding: 9px 10px;
+  border: 0;
   border-radius: 5px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
-.mobile-menu li a:hover {
+.mobile-menu li a:hover,
+.mobile-menu li button:hover {
   background: var(--surface);
 }
 
@@ -251,9 +260,12 @@ summary {
   padding: 10px 24px;
   border: 0;
   border-radius: 6px;
+  font-family: inherit;
+  font-size: inherit;
   font-weight: 500;
   line-height: 24px;
   white-space: nowrap;
+  cursor: pointer;
   box-shadow: 0 1px 2px rgba(3, 4, 12, 0.05), inset 0 -2px 1px rgba(3, 4, 12, 0.05);
   transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
@@ -266,6 +278,12 @@ summary {
 .button:active,
 .carousel-arrows a:active {
   transform: translateY(0);
+}
+
+.button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
 }
 
 .button-primary {
@@ -389,6 +407,25 @@ h2 {
 .hero .button-light {
   background: rgba(3, 4, 12, 0.05);
   color: var(--ink);
+}
+
+.checkout-status {
+  max-width: 560px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: rgba(3, 4, 12, 0.68);
+  color: var(--white);
+  font-size: 14px;
+  line-height: 20px;
+  backdrop-filter: blur(8px);
+}
+
+.checkout-status[data-state="success"] {
+  background: rgba(25, 101, 52, 0.86);
+}
+
+.checkout-status[data-state="error"] {
+  background: rgba(160, 30, 45, 0.88);
 }
 
 .hero-tabs {
