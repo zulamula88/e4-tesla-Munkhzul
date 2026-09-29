@@ -2,6 +2,8 @@
 
 `Order Now` товч нь серверийн `/api/checkout` endpoint-оор BYL checkout үүсгэж, хэрэглэгчийг BYL-ийн төлбөрийн хуудас руу шилжүүлнэ.
 
+Production deployment дээр `api/checkout.js` нь Vercel Function хэлбэрээр ажиллана. Локал хөгжүүлэлтэд `server.mjs` ижил endpoint-ийг ажиллуулна.
+
 ## Локал тохиргоо
 
 Node.js 18 буюу түүнээс шинэ хувилбар шаардлагатай. Нэмэлт package суулгахгүй.
@@ -42,3 +44,17 @@ npm start
 Checkout-д `modelY_price` lookup key ашиглана. `Product ID 1651` нь BYL item-ийн параметр биш тул захиалгын `client_reference_id` дотор ашиглагдана.
 
 > Төлбөр үнэхээр дууссаны дараах захиалга баталгаажуулах бизнес логикийг `success_url`-д найдахгүй, BYL-ийн `checkout.completed` webhook дээр хэрэгжүүлэх нь зөв. Webhook-ийн гарын үсэг шалгах баримт өгөгдвөл тус endpoint-ийг нэмж болно.
+
+## Vercel deployment
+
+Vercel-ийн Production Environment Variables хэсэгт дараах утгуудыг тохируулна:
+
+```dotenv
+BYL_TOKEN=жинхэнэ_токен
+BYL_PROJECT_ID=852
+BYL_PRICE_LOOKUP_KEY=modelY_price
+BYL_PRODUCT_ID=1651
+APP_URL=https://e4-tesla-munkhzul.vercel.app
+```
+
+`BYL_TOKEN`-г Secret, бусад утгыг Config төрлөөр хадгална. Өөрчлөлтүүдээ GitHub руу push хийхэд Vercel шинэ deployment үүсгэнэ.
