@@ -1,60 +1,57 @@
-# Tesla Model Y урьдчилсан захиалга
+# Tesla Model Y — Next.js + Tailwind CSS
 
-`Order Now` товч нь серверийн `/api/checkout` endpoint-оор BYL checkout үүсгэж, хэрэглэгчийг BYL-ийн төлбөрийн хуудас руу шилжүүлнэ.
+Tesla landing page-ийг Next.js App Router болон Tailwind CSS v4 дээр хэрэгжүүлсэн хувилбар. `Test Drive` товч Cal.com цаг захиалгыг, `Order Now` товч сервер талын BYL checkout-ийг нээнэ.
 
-Production deployment дээр `api/checkout.js` нь Vercel Function хэлбэрээр ажиллана. Локал хөгжүүлэлтэд `server.mjs` ижил endpoint-ийг ажиллуулна.
+## Ашигласан бүтэц
 
-## Локал тохиргоо
+- `app/page.js` — үндсэн landing page
+- `app/globals.css` — Tailwind import, local font болон цөөн global utility
+- `components/SiteHeader.jsx` — desktop/mobile navigation
+- `components/CalInitializer.jsx` — Cal.com embed
+- `components/CheckoutControls.jsx` — BYL checkout-ийн client төлөв
+- `app/api/checkout/route.js` — токеныг browser-т ил гаргахгүй Next.js API route
+- `public/assets` — зураг, SVG, local font
 
-Node.js 18 буюу түүнээс шинэ хувилбар шаардлагатай. Нэмэлт package суулгахгүй.
+## Локал ажиллуулах
+
+Next.js-ийн шаардлагаар Node.js 20.9 буюу түүнээс шинэ хувилбар ашиглана.
 
 ```bash
-cp .env.example .env
+npm install
+cp .env.example .env.local
+npm run dev
 ```
 
-`.env` дотор BYL удирдлагын булангаас авсан токеноо оруулна:
+Дараа нь [http://localhost:3000](http://localhost:3000) хаягийг нээнэ.
+
+`.env.local` дотор:
 
 ```dotenv
 BYL_TOKEN=энд_жинхэнэ_токеноо_оруулна
 BYL_PROJECT_ID=852
 BYL_PRICE_LOOKUP_KEY=modelY_price
 BYL_PRODUCT_ID=1651
-APP_URL=http://localhost:4173
-HOST=127.0.0.1
-PORT=4173
-NODE_ENV=development
+APP_URL=http://localhost:3000
 ```
 
-Дараа нь серверээ ажиллуулна:
-
-```bash
-npm start
-```
-
-`http://localhost:4173` хаягаар нээгээд `Order Now` товчийг туршина.
+`APP_URL` нь сонголттой. Тохируулаагүй эсвэл идэвхтэй deployment domain-оос өөр байвал checkout одоогийн request domain-ийг callback URL болгон ашиглана.
 
 ## Токены нууцлал
 
-- `BYL_TOKEN`-г `index.html`, `app.js` эсвэл бусад browser-т очих файлд бүү оруул.
-- `.env` нь `.gitignore`-д орсон тул Git-д commit хийгдэхгүй. `git status`-оор `.env` харагдахгүй байгааг шалга.
-- Production hosting дээр `.env` файл upload хийхийн оронд тухайн үйлчилгээний **Environment Variables / Secrets** хэсэгт `BYL_TOKEN`-г хадгал.
-- Production үед `APP_URL=https://таны-домэйн.mn`, `NODE_ENV=production` гэж тохируул.
-- Токен санамсаргүй ил болсон бол BYL-ийн **Тохиргоо → API токэн** хэсгээс даруй хүчингүй болгож шинээр үүсгэ.
+- `BYL_TOKEN`-г React component, `NEXT_PUBLIC_*` хувьсагч эсвэл browser-т очих файлд бүү оруул.
+- `.env.local` нь Git-д commit хийгдэхгүй.
+- Vercel-ийн **Project Settings → Environment Variables** хэсэгт `BYL_TOKEN`-г **Secret**, бусад утгыг энгийн environment variable байдлаар хадгална.
+- Токен ил болсон бол BYL-ийн **Тохиргоо → API токэн** хэсгээс хүчингүй болгож шинээр үүсгэнэ.
 
-Checkout-д `modelY_price` lookup key ашиглана. `Product ID 1651` нь BYL item-ийн параметр биш тул захиалгын `client_reference_id` дотор ашиглагдана.
+## Production build
 
-> Төлбөр үнэхээр дууссаны дараах захиалга баталгаажуулах бизнес логикийг `success_url`-д найдахгүй, BYL-ийн `checkout.completed` webhook дээр хэрэгжүүлэх нь зөв. Webhook-ийн гарын үсэг шалгах баримт өгөгдвөл тус endpoint-ийг нэмж болно.
-
-## Vercel deployment
-
-Vercel-ийн Production Environment Variables хэсэгт дараах утгуудыг тохируулна:
-
-```dotenv
-BYL_TOKEN=жинхэнэ_токен
-BYL_PROJECT_ID=852
-BYL_PRICE_LOOKUP_KEY=modelY_price
-BYL_PRODUCT_ID=1651
-APP_URL=https://e4-tesla-munkhzul.vercel.app
+```bash
+npm run build
+npm start
 ```
 
-`BYL_TOKEN`-г Secret, бусад утгыг Config төрлөөр хадгална. Өөрчлөлтүүдээ GitHub руу push хийхэд Vercel шинэ deployment үүсгэнэ.
+Vercel GitHub repository-той холбоотой үед `main` branch руу push хийхэд Next.js build автоматаар deploy хийгдэнэ.
+
+Checkout нь `modelY_price` lookup key ашиглана. `Product ID 1651` нь BYL item параметр биш бөгөөд `client_reference_id` үүсгэхэд ашиглагдана.
+
+> Төлбөрийн эцсийн баталгаажуулалтыг `success_url`-д найдалгүй BYL-ийн `checkout.completed` webhook дээр хэрэгжүүлэх нь зөв.

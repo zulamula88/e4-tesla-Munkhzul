@@ -2,13 +2,23 @@
   "name": "tesla-model-y-preorder",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
-    "start": "node server.mjs",
-    "dev": "node --watch server.mjs",
-    "check": "node --check server.mjs && node --check app.js && node --check api/checkout.js"
+    "dev": "next dev",
+    "build": "next build --webpack",
+    "start": "next start",
+    "check": "next build --webpack"
+  },
+  "dependencies": {
+    "next": "^16.3.8",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20.9"
   }
 }
