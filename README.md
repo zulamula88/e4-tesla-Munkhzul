@@ -5,6 +5,8 @@ Tesla landing page-ийг Next.js App Router болон Tailwind CSS v4 дээр
 ## Ашигласан бүтэц
 
 - `app/page.js` — үндсэн landing page
+- `app/styleguide/page.js` — Home UI foundation болон component styleguide
+- `app/uilibrary/page.js` — reusable component showcase
 - `app/globals.css` — Tailwind import, local font болон цөөн global utility
 - `components/SiteHeader.jsx` — desktop/mobile navigation
 - `components/CalInitializer.jsx` — Cal.com embed

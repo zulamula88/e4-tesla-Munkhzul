@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import CalInitializer from "./CalInitializer";
 
 const calAttributes = {
@@ -11,17 +15,19 @@ const calAttributes = {
 };
 
 const navigation = [
-  ["Vehicles", "#vehicles"],
-  ["Energy", "#energy"],
-  ["Charging", "#charging"],
-  ["Discover", "#discover"],
-  ["Shop", "#shop"]
+  ["Vehicles", "/vehicles"],
+  ["Energy", "/energy"],
+  ["Charging", "/charging"],
+  ["Discover", "/discover"],
+  ["Shop", "/shop"]
 ];
 
 const primaryButton =
   "motion-control tap-transparent inline-flex min-h-10 cursor-pointer items-center justify-center whitespace-nowrap rounded-md border-0 bg-royal-blue px-5 py-2 font-sans font-medium leading-6 text-white shadow-[0_1px_1px_rgba(3,4,12,0.05),inset_0_32px_24px_rgba(255,255,255,0.05),inset_0_2px_1px_rgba(255,255,255,0.25),inset_0_-2px_1px_rgba(0,0,0,0.2)] transition-[transform,box-shadow,background-color] duration-160 hover:-translate-y-px hover:bg-[#354bdb] active:translate-y-0";
 
 export default function SiteHeader() {
+  const pathname = usePathname();
+
   return (
     <>
       <CalInitializer />
@@ -37,9 +43,9 @@ export default function SiteHeader() {
           className="grid h-full w-full grid-cols-[1fr_auto_1fr] items-center gap-8 px-[var(--page-gutter)] max-[1100px]:gap-5 max-[800px]:grid-cols-[auto_1fr_auto] max-[600px]:grid-cols-[auto_1fr] max-[600px]:gap-3"
           aria-label="Primary navigation"
         >
-          <a
+          <Link
             className="flex h-9 w-[84px] items-center justify-center max-[600px]:w-[76px]"
-            href="#top"
+            href="/"
             aria-label="Tesla home"
           >
             <Image
@@ -49,17 +55,22 @@ export default function SiteHeader() {
               height={36}
               priority
             />
-          </a>
+          </Link>
 
           <ul className="flex items-center gap-8 max-[1100px]:gap-[18px] max-[800px]:hidden">
             {navigation.map(([label, href]) => (
               <li key={href}>
-                <a
-                  className="whitespace-nowrap underline-offset-4 hover:underline"
+                <Link
+                  className={`flex h-[72px] items-center border-b-2 underline-offset-4 transition-colors hover:text-royal-blue ${
+                    pathname === href
+                      ? "border-royal-blue font-semibold text-royal-blue"
+                      : "border-transparent"
+                  }`}
                   href={href}
+                  aria-current={pathname === href ? "page" : undefined}
                 >
                   {label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -86,12 +97,17 @@ export default function SiteHeader() {
               </li>
               {navigation.map(([label, href]) => (
                 <li key={href}>
-                  <a
-                    className="block w-full rounded-[5px] px-2.5 py-[9px] text-left hover:bg-surface"
+                  <Link
+                    className={`block w-full rounded-[5px] px-2.5 py-[9px] text-left ${
+                      pathname === href
+                        ? "bg-blue-surface font-semibold text-royal-blue"
+                        : "hover:bg-surface"
+                    }`}
                     href={href}
+                    aria-current={pathname === href ? "page" : undefined}
                   >
                     {label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

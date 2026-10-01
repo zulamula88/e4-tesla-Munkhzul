@@ -73,11 +73,11 @@ const products = [
 ];
 
 const footerLinks = [
-  ["Vehicles", "#vehicles"],
-  ["Energy", "#energy"],
-  ["Charging", "#charging"],
-  ["Discover", "#discover"],
-  ["Shop", "#shop"]
+  ["Vehicles", "/vehicles"],
+  ["Energy", "/energy"],
+  ["Charging", "/charging"],
+  ["Discover", "/discover"],
+  ["Shop", "/shop"]
 ];
 
 function ChevronLink({ href, children }) {
