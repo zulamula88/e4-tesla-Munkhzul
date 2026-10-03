@@ -1,6 +1,7 @@
 import Image from "next/image";
 import CheckoutControls from "../components/CheckoutControls";
 import SiteHeader from "../components/SiteHeader";
+import { getPublicFooterText } from "../lib/footer-settings";
 
 const container = "mx-auto w-full max-w-[1280px]";
 const sectionGutter = "px-[var(--page-gutter)]";
@@ -120,7 +121,9 @@ function SectionTitle({ id, title }) {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const footerText = await getPublicFooterText();
+
   return (
     <>
       <SiteHeader />
@@ -508,7 +511,9 @@ export default function HomePage() {
               <Image className="h-px w-[1280px]" src="/assets/divider.svg" alt="" width={1280} height={1} />
             </div>
             <div className="flex w-full items-start justify-between text-sm leading-[21px] whitespace-nowrap max-[800px]:flex-col max-[800px]:items-center max-[800px]:gap-6">
-              <p>Tesla © 2026</p>
+              <p className="max-w-full break-words whitespace-normal text-center">
+                {footerText}
+              </p>
               <ul className="flex gap-6 max-[800px]:flex-wrap max-[800px]:justify-center max-[600px]:gap-x-5 max-[600px]:gap-y-3">
                 <li>
                   <a className="underline underline-offset-2" id="privacy" href="#privacy">
