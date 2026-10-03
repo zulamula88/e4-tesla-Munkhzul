@@ -9,6 +9,8 @@
     "check": "next build --webpack"
   },
   "dependencies": {
+    "@supabase/ssr": "0.12.7",
+    "@supabase/supabase-js": "2.117.2",
     "next": "^16.3.8",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
@@ -19,6 +21,6 @@
     "tailwindcss": "^4.3.3"
   },
   "engines": {
-    "node": ">=20.9"
+    "node": ">=22"
   }
 }

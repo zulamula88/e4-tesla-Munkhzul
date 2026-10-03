@@ -16,7 +16,7 @@ Tesla landing page-ийг Next.js App Router болон Tailwind CSS v4 дээр
 
 ## Локал ажиллуулах
 
-Next.js-ийн шаардлагаар Node.js 20.9 буюу түүнээс шинэ хувилбар ашиглана.
+Node.js 22 буюу түүнээс шинэ хувилбар ашиглана.
 
 ```bash
 npm install
@@ -34,9 +34,22 @@ BYL_PROJECT_ID=852
 BYL_PRICE_LOOKUP_KEY=modelY_price
 BYL_PRODUCT_ID=1651
 APP_URL=http://localhost:3000
+
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
+ADMIN_EMAIL=zulamula.88@gmail.com
+ADMIN_USER_ID=Supabase_Auth_user_UUID
 ```
 
 `APP_URL` нь сонголттой. Тохируулаагүй эсвэл идэвхтэй deployment domain-оос өөр байвал checkout одоогийн request domain-ийг callback URL болгон ашиглана.
+
+## Админ нэвтрэлт
+
+- `/admin/login` нь Supabase Auth-ийн имэйл/нууц үгээр нэвтэрнэ.
+- `/admin` нь баталгаажсан JWT-ийн хэрэглэгчийн UUID болон имэйлийг сервер талд шалгана.
+- `ADMIN_USER_ID` нь **Authentication → Users** хэсэг дэх зөвшөөрөгдсөн хэрэглэгчийн UUID байна.
+- Нууц үгийг Supabase Dashboard-ийн **Authentication → Users** хэсэгт үүсгэх эсвэл recovery имэйлээр шинэчилнэ.
+- Нууц үг, Supabase secret/service-role key-г код эсвэл environment variable-д бүү хадгал. Browser талд зөвхөн publishable key ашиглана.
 
 ## Токены нууцлал
 
